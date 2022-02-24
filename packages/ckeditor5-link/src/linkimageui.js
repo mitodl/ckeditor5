@@ -17,7 +17,7 @@ import { LINK_KEYSTROKE } from './utils';
 
 import linkIcon from '../theme/icons/link.svg';
 
-import { RESOURCE_LINK_UI } from './constants'
+import { RESOURCE_LINK_UI } from './constants';
 
 /**
  * The link image UI plugin.

@@ -14,7 +14,7 @@ import { Collection, first, toMap } from 'ckeditor5/src/utils';
 import AutomaticDecorators from './utils/automaticdecorators';
 import { isLinkableElement } from './utils';
 
-import { RESOURCE_LINK } from './constants'
+import { RESOURCE_LINK } from './constants';
 
 /**
  * The link command. It is used by the {@link module:link/link~Link link feature}.
@@ -145,10 +145,10 @@ export default class LinkCommand extends Command {
 	 * decorator attributes.
 	 *
 	 * @fires execute
-	 * @param {String} uuid Link destination.
+	 * @param {String} linkAttrs stringified information about the link, encoding information about the destination.
 	 * @param {Object} [manualDecoratorIds={}] The information about manual decorator attributes to be applied or removed upon execution.
 	 */
-	execute( uuid, title, manualDecoratorIds = {} ) {
+	execute( linkAttrs, title, manualDecoratorIds = {} ) {
 		const model = this.editor.model;
 		const selection = model.document.selection;
 		// Stores information about manual decorators to turn them on/off when command is applied.
@@ -173,7 +173,7 @@ export default class LinkCommand extends Command {
 					// Then update `linkHref` value.
 					const linkRange = findAttributeRange( position, RESOURCE_LINK, selection.getAttribute( RESOURCE_LINK ), model );
 
-					writer.setAttribute( RESOURCE_LINK, uuid, linkRange );
+					writer.setAttribute( RESOURCE_LINK, linkAttrs, linkRange );
 
 					truthyManualDecorators.forEach( item => {
 						writer.setAttribute( item, true, linkRange );
@@ -189,10 +189,10 @@ export default class LinkCommand extends Command {
 				// If not then insert text node with `linkHref` attribute in place of caret.
 				// However, since selection is collapsed, attribute value will be used as data for text node.
 				// So, if `href` is empty, do not create text node.
-				else if ( uuid !== '' ) {
+				else if ( linkAttrs !== '' ) {
 					const attributes = toMap( selection.getAttributes() );
 
-					attributes.set( RESOURCE_LINK, uuid );
+					attributes.set( RESOURCE_LINK, linkAttrs );
 
 					truthyManualDecorators.forEach( item => {
 						attributes.set( item, true );
@@ -236,7 +236,7 @@ export default class LinkCommand extends Command {
 				}
 
 				for ( const range of rangesToUpdate ) {
-					writer.setAttribute( RESOURCE_LINK, uuid, range );
+					writer.setAttribute( RESOURCE_LINK, linkAttrs, range );
 
 					truthyManualDecorators.forEach( item => {
 						writer.setAttribute( item, true, range );

@@ -16,7 +16,7 @@ import { keyCodes, env } from 'ckeditor5/src/utils';
 import LinkCommand from './linkcommand';
 import UnlinkCommand from './unlinkcommand';
 import ManualDecorator from './utils/manualdecorator';
-import { createLinkElement, ensureSafeUrl, getLocalizedDecorators, normalizeDecorators, openLink } from './utils';
+import { createLinkElement, getLocalizedDecorators, normalizeDecorators, openLink } from './utils';
 
 import '../theme/link.css';
 
@@ -26,10 +26,10 @@ const DECORATOR_MANUAL = 'manual';
 const EXTERNAL_LINKS_REGEXP = /^(https?:)?\/\//;
 
 import {
-  RESOURCE_LINK,
-  RESOURCE_LINK_COMMAND,
-  RESOURCE_UNLINK_COMMAND 
-} from './constants'
+	RESOURCE_LINK,
+	RESOURCE_LINK_COMMAND,
+	RESOURCE_UNLINK_COMMAND
+} from './constants';
 
 /**
  * The link engine feature.
@@ -79,8 +79,8 @@ export default class LinkEditing extends Plugin {
 			.attributeToElement( { model: RESOURCE_LINK, view: createLinkElement } );
 
 		editor.conversion.for( 'editingDowncast' )
-			.attributeToElement( { model: RESOURCE_LINK, view: ( uuid, conversionApi ) => {
-				return createLinkElement( uuid, conversionApi );
+			.attributeToElement( { model: RESOURCE_LINK, view: ( linkAttrs, conversionApi ) => {
+				return createLinkElement( linkAttrs, conversionApi );
 			} } );
 
 		editor.conversion.for( 'upcast' )
@@ -88,12 +88,12 @@ export default class LinkEditing extends Plugin {
 				view: {
 					name: 'a',
 					attributes: {
-						'data-uuid': true
+						'data-link-attrs': true
 					}
 				},
 				model: {
 					key: RESOURCE_LINK,
-					value: viewElement => viewElement.getAttribute( 'data-uuid' )
+					value: viewElement => viewElement.getAttribute( 'data-link-attrs' )
 				}
 			} );
 

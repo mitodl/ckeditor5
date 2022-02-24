@@ -20,12 +20,11 @@ import linkIcon from '../theme/icons/link.svg';
 const VISUAL_SELECTION_MARKER_NAME = 'link-ui';
 
 import {
-  RESOURCE_LINK,
-  RESOURCE_LINK_UI,
-  RESOURCE_LINK_COMMAND,
-  RESOURCE_UNLINK_COMMAND 
-} from './constants'
-
+	RESOURCE_LINK,
+	RESOURCE_LINK_UI,
+	RESOURCE_LINK_COMMAND,
+	RESOURCE_UNLINK_COMMAND
+} from './constants';
 
 /**
  * The link UI plugin. It introduces the `'link'` and `'unlink'` buttons and support for the <kbd>Ctrl+K</kbd> keystroke.
@@ -126,7 +125,7 @@ export default class LinkUI extends Plugin {
 		const linkCommand = editor.commands.get( RESOURCE_LINK_COMMAND );
 		const unlinkCommand = editor.commands.get( RESOURCE_UNLINK_COMMAND );
 
-		actionsView.bind( 'data-uuid' ).to( linkCommand, 'value' );
+		actionsView.bind( 'data-link-attrs' ).to( linkCommand, 'value' );
 		actionsView.editButtonView.bind( 'isEnabled' ).to( linkCommand );
 		actionsView.unlinkButtonView.bind( 'isEnabled' ).to( unlinkCommand );
 
@@ -179,7 +178,7 @@ export default class LinkUI extends Plugin {
 		this.listenTo( formView, 'submit', () => {
 			const { value } = formView.urlInputView.fieldView.element;
 			const parsedUrl = addLinkProtocolIfApplicable( value, defaultProtocol );
-			editor.execute(RESOURCE_LINK_COMMAND, parsedUrl, formView.getDecoratorSwitchesState() );
+			editor.execute( RESOURCE_LINK_COMMAND, parsedUrl, formView.getDecoratorSwitchesState() );
 			this._closeFormView();
 		} );
 
@@ -224,8 +223,8 @@ export default class LinkUI extends Plugin {
 			button.isEnabled = true;
 			button.label = t( 'Resource Link' );
 			button.icon = linkIcon;
-                  button.text = 'Link Resource';
-                  button.keystroke = LINK_KEYSTROKE;
+			button.text = 'Link Resource';
+			button.keystroke = LINK_KEYSTROKE;
 			button.tooltip = true;
 			button.isToggleable = true;
 

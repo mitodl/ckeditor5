@@ -26,6 +26,7 @@ import LinkEditing from '../src/linkediting';
 import LinkUI from '../src/linkui';
 import LinkFormView from '../src/ui/linkformview';
 import LinkActionsView from '../src/ui/linkactionsview';
+import { RESOURCE_LINK_UI } from '../src/constants';
 
 describe( RESOURCE_LINK_UI, () => {
 	let editor, linkUIFeature, linkButton, balloon, formView, actionsView, editorElement;

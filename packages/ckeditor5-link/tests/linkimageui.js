@@ -15,6 +15,7 @@ import testUtils from '@ckeditor/ckeditor5-core/tests/_utils/utils';
 import LinkImage from '../src/linkimage';
 import LinkImageUI from '../src/linkimageui';
 import Image from '@ckeditor/ckeditor5-image/src/image';
+import { RESOURCE_LINK_UI } from './constants';
 
 describe( 'LinkImageUI', () => {
 	let editor, viewDocument, editorElement;
